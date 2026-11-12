@@ -222,4 +222,400 @@
         }
 
         .timeline-item::after {
-            content: '\f1
+            content: '\f111';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--white);
+            border: 2px solid var(--accent);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: var(--accent);
+        }
+
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+
+        .right::after { left: -13px; }
+
+        .timeline-content {
+            padding: 20px;
+            background: var(--white);
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(90,123,90,0.15);
+        }
+
+        .timeline-content h4 {
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content time {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Lugares y Tarjetas */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(90,123,90,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(90,123,90,0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Sección RSVP / Formulario */
+        .rsvp-section {
+            background: linear-gradient(rgba(90,123,90,0.08), rgba(90,123,90,0.08));
+            text-align: center;
+            border-radius: 20px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background-color: #2c3e2d;
+            color: var(--white);
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        footer span {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .names { font-size: 3rem; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
+            .timeline-item::after { left: 18px !important; }
+            .left, .right { left: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pétalos cayendo (Canvas) -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- Reproductor de audio -->
+    <div class="music-player" id="musicToggle" title="Reproducir música romántica">
+        <i class="fa-solid fa-music" id="musicIcon"></i>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-wedding-piano-112198.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Cabecera -->
+    <header>
+        <div class="hero-content">
+            <h3>¡Nos Casamos!</h3>
+            <h1 class="names">Stefany <span>&</span> Noelia</h1>
+            <div class="divider"><i class="fa-solid fa-seedling"></i></div>
+            <p class="date-location">30 de Mayo de 2027<br>Hotel Gastronómico Mar de Fulles</p>
+            
+            <!-- Cuenta atrás -->
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-box"><span id="days">00</span><label>Días</label></div>
+                <div class="countdown-box"><span id="hours">00</span><label>Horas</label></div>
+                <div class="countdown-box"><span id="minutes">00</span><label>Min</label></div>
+                <div class="countdown-box"><span id="seconds">00</span><label>Seg</label></div>
+            </div>
+
+            <a href="#rsvp" class="btn">Confirmar Asistencia</a>
+        </div>
+    </header>
+
+    <!-- Historia / Bienvenida -->
+    <section style="text-align: center;">
+        <h2 class="section-title">El Comienzo del Resto de Nuestras Vidas</h2>
+        <div class="divider"><i class="fa-solid fa-heart"></i></div>
+        <p style="max-width: 600px; margin: 0 auto; line-height: 1.8; color: #555;">
+            Hay momentos en la vida que son inolvidables, y compartirlos con las personas que más queremos los hace eternos. Queremos celebrar nuestro amor, nuestras risas y nuestro futuro juntos. ¡No faltéis a nuestra cita más especial!
+        </p>
+    </section>
+
+    <!-- Ubicación y Detalles -->
+    <section>
+        <h2 class="section-title">¿Dónde y Cuándo?</h2>
+        <p class="section-subtitle">Todo listo para un día mágico</p>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <i class="fa-solid fa-church"></i>
+                <h3>La Ceremonia & Banquete</h3>
+                <p><strong>Hotel Gastronómico Mar de Fulles</strong><br>Un entorno natural único rodeado de naturaleza y tranquilidad para celebrar nuestro banquete y ceremonia.</p>
+                <a href="https://maps.google.com/?q=Mar+de+Fulles" target="_blank" class="btn btn-outline">Ver en Google Maps</a>
+            </div>
+            
+            <div class="card">
+                <i class="fa-solid fa-calendar-days"></i>
+                <h3>Fecha y Hora</h3>
+                <p>Sábado, 30 de Mayo de 2027<br>Recepción de invitados a partir de las <strong>12:30 PM</strong>.</p>
+                <a href="#" id="addToCalendar" class="btn btn-outline">Añadir al Calendario</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cronograma / Itinerario -->
+    <section>
+        <h2 class="section-title">Itinerario del Día</h2>
+        <p class="section-subtitle">Los momentos que compartiremos</p>
+
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <time>12:30 PM</time>
+                    <h4>La Ceremonia</h4>
+                    <p>Daremos el "sí, quiero" rodeados de nuestros seres queridos.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <time>13:30 PM</time>
+                    <h4>Cóctel de Bienvenida</h4>
+                    <p>Brindis, aperitivos y celebración al aire libre.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <time>15:00 PM</time>
+                    <h4>Banquete Gastronómico</h4>
+                    <p>Disfrutaremos de una comida inolvidable juntos.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <time>18:00 PM</time>
+                    <h4>Fiesta & Baile</h4>
+                    <p>¡A bailar y celebrar la noche por todo lo alto!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección RSVP -->
+    <section id="rsvp" class="rsvp-section">
+        <h2 class="section-title">Confirmación de Asistencia</h2>
+        <div class="divider"><i class="fa-solid fa-envelope-open-text"></i></div>
+        <p style="max-width: 500px; margin: 0 auto 2rem auto; color: #555;">
+            Por favor, ayúdanos confirmando tu asistencia y necesidades especiales antes del próximo <strong>30 de abril de 2027</strong>.
+        </p>
+        <a href="https://forms.gle/oM4u7sLy4NAiF7FbA" target="_blank" class="btn" style="font-size: 1.1rem; padding: 15px 40px;">
+            <i class="fa-solid fa-pen-to-square"></i> Rellenar Formulario RSVP
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Stefany <span>&</span> Noelia</p>
+        <p style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif; opacity: 0.8; letter-spacing: 1px;">¡Te esperamos para celebrar el amor!</p>
+    </footer>
+
+    <!-- Scripts Interactivos -->
+    <script>
+        /* Cuenta Atrás */
+        const weddingDate = new Date("May 30, 2027 12:30:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "¡Es el gran día!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* Reproductor de música */
+        const musicToggle = document.getElementById("musicToggle");
+        const bgMusic = document.getElementById("bgMusic");
+        const musicIcon = document.getElementById("musicIcon");
+        let isPlaying = false;
+
+        musicToggle.addEventListener("click", () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove("fa-pause");
+                musicIcon.classList.add("fa-music");
+                musicToggle.title = "Reproducir música romántica";
+            } else {
+                bgMusic.play().catch(() => {});
+                musicIcon.classList.remove("fa-music");
+                musicIcon.classList.add("fa-pause");
+                musicToggle.title = "Pausar música";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        /* Animación de Pétalos flotantes (Canvas) */
+        const canvas = document.getElementById("petals-canvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 1.2 + 0.6;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y / 50) * 0.5;
+                this.rotation += this.rotationSpeed;
+                if (this.y > canvas.height + 20) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = "#e8c5c8"; // Tono pétalo rosa/crema
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const petals = Array.from({ length: 30 }, () => new Petal());
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animatePetals);
+        }
+        animatePetals();
+
+        /* Añadir a Calendario */
+        document.getElementById("addToCalendar").addEventListener("click", (e) => {
+            e.preventDefault();
+            const title = encodeURIComponent("Boda de Stefany & Noelia");
+            const details = encodeURIComponent("¡Nos casamos! Hotel Gastronómico Mar de Fulles.");
+            const location = encodeURIComponent("Hotel Gastronómico Mar de Fulles");
+            const dates = "20270530T103000Z/20270530T220000Z";
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+            window.open(url, "_blank");
+        });
+    </script>
+</body>
+</html>
