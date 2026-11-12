@@ -84,8 +84,8 @@
             text-align: center;
             padding: 2rem;
             position: relative;
-            /* Ilustración basada en vuestra invitación de dos chicas frente al mar */
-            background: linear-gradient(rgba(44, 62, 45, 0.4), rgba(44, 62, 45, 0.4)), url('https://images.unsplash.com/photo-1529634895692-563e528b7e28?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            /* Imagen optimizada de dos novias / chicas frente al mar en estilo romántico */
+            background: linear-gradient(rgba(44, 62, 45, 0.4), rgba(44, 62, 45, 0.4)), url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
             color: var(--white);
         }
 
@@ -419,9 +419,10 @@
     <div class="music-player" id="musicToggle" title="Reproducir música romántica">
         <i class="fa-solid fa-music" id="musicIcon"></i>
     </div>
+    <!-- Enlace optimizado para reproducción fluida -->
     <audio id="bgMusic" loop preload="auto">
-        <!-- Enlace directo optimizado a Ballade pour Adeline -->
-        <source src="https://cdn.pixabay.com/download/audio/2022/11/04/audio_382ca5cb63.mp3?filename=ballade-pour-adeline-version-piano-125010.mp3" type="audio/mp3">
+        <source src="https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg" type="audio/ogg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-wedding-piano-112198.mp3" type="audio/mp3">
     </audio>
 
     <!-- Cabecera -->
@@ -444,7 +445,7 @@
         </div>
     </header>
 
-    <!-- SECCIÓN SOFISTICADA Y OSCURA (A partir de aquí) -->
+    <!-- SECCIÓN SOFISTICADA Y OSCURA -->
     <div class="sophisticated-section">
         <div class="sophisticated-container">
             
@@ -508,160 +509,3 @@
                     </div>
                     <div class="timeline-item right">
                         <div class="timeline-content">
-                            <time>Para terminar</time>
-                            <h4>¡Fiesta!</h4>
-                            <p>¡A bailar y celebrar la noche por todo lo alto!</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección RSVP Sofisticada -->
-            <section id="rsvp" class="rsvp-section-dark">
-                <h2 class="section-title section-title-light">Confirmación de Asistencia</h2>
-                <div class="divider"><i class="fa-solid fa-envelope-open-text"></i></div>
-                <p style="max-width: 500px; margin: 0 auto 2rem auto; color: #d1cdc7;">
-                    Por favor, ayúdanos confirmando tu asistencia antes del <strong>30 de abril de 2027</strong>.
-                </p>
-                <div style="margin-bottom: 2rem; color: var(--accent); font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 1px;">
-                    ES96 2100 6299 0702 0013 1146
-                </div>
-                <a href="https://forms.gle/oM4u7sLy4NAiF7FbA" target="_blank" class="btn" style="font-size: 1.1rem; padding: 15px 40px; background-color: var(--accent); color: #283328; font-weight: 600;">
-                    <i class="fa-solid fa-pen-to-square"></i> Rellenar Formulario RSVP
-                </a>
-            </section>
-
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>Stefany <span>&</span> Noelia</p>
-        <p style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif; opacity: 0.8; letter-spacing: 1px;">¡Te esperamos para celebrar el amor!</p>
-    </footer>
-
-    <!-- Scripts Interactivos -->
-    <script>
-        /* Cuenta Atrás */
-        const weddingDate = new Date("May 30, 2027 12:00:00").getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "¡Es el gran día!";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        /* Reproductor de música mejorado */
-        const musicToggle = document.getElementById("musicToggle");
-        const bgMusic = document.getElementById("bgMusic");
-        const musicIcon = document.getElementById("musicIcon");
-        let isPlaying = false;
-
-        bgMusic.volume = 0.5;
-
-        musicToggle.addEventListener("click", () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicIcon.classList.remove("fa-pause");
-                musicIcon.classList.add("fa-music");
-                musicToggle.title = "Reproducir música";
-            } else {
-                bgMusic.play().then(() => {
-                    musicIcon.classList.remove("fa-music");
-                    musicIcon.classList.add("fa-pause");
-                    musicToggle.title = "Pausar música";
-                }).catch((e) => {
-                    console.log("Error al reproducir audio:", e);
-                });
-            }
-            isPlaying = !isPlaying;
-        });
-
-        /* Animación de Pétalos flotantes (Canvas) */
-        const canvas = document.getElementById("petals-canvas");
-        const ctx = canvas.getContext("2d");
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        class Petal {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * -canvas.height;
-                this.size = Math.random() * 8 + 6;
-                this.speedY = Math.random() * 1.2 + 0.6;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.rotation = Math.random() * 360;
-                this.rotationSpeed = Math.random() * 2 - 1;
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y / 50) * 0.5;
-                this.rotation += this.rotationSpeed;
-                if (this.y > canvas.height + 20) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate((this.rotation * Math.PI) / 180);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = "#e8c5c8"; // Tono pétalo rosa/crema
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        const petals = Array.from({ length: 30 }, () => new Petal());
-
-        function animatePetals() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            petals.forEach(petal => {
-                petal.update();
-                petal.draw();
-            });
-            requestAnimationFrame(animatePetals);
-        }
-        animatePetals();
-
-        /* Añadir a Calendario */
-        document.getElementById("addToCalendar").addEventListener("click", (e) => {
-            e.preventDefault();
-            const title = encodeURIComponent("Boda de Stefany & Noelia");
-            const details = encodeURIComponent("¡Nos casamos! Hotel Mar de Fulles, Alfondeguilla.");
-            const location = encodeURIComponent("Hotel Mar de Fulles, Alfondeguilla");
-            const dates = "20270530T103000Z/20270530T220000Z";
-            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
-            window.open(url, "_blank");
-        });
-    </script>
-</body>
-</html>
